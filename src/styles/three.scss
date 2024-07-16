@@ -1,0 +1,105 @@
+
+.app__three {
+  &--nav {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    // bottom: 8px;
+    padding: 8px;
+    border-radius: 2px;
+    overflow: visible;
+    li {
+      padding: 8px;
+      list-style: none;
+      position: relative;
+      appearance: none;
+
+      .icon, .dot {
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        position: relative;
+        background: none;
+        border: 1px solid transparent;
+        display: flex;
+        background-color: rgba(black, 0.4);
+        appearance: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .dot {
+        color: transparent;
+        // text-indent: -9999px;
+        &:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 6px;
+          height: 6px;
+          border-radius: 100%;
+          background: #eee;
+          transition: all .2s linear;
+        }
+      }
+    }
+    a:not(.dot) {
+      color: #fff;
+      user-select: none;
+    }
+  }
+  &--vis {
+    flex: 1;
+    display: flex;
+    max-width: 520px;
+    margin: 0 auto;
+    justify-content: center;
+    // justify-content: center;
+    // > button {
+    //   flex: 0 0 100px;
+    // }
+    &-thumbs {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      background-color: var(--color-bg);
+      // flex-wrap: wrap;
+    }
+    &-thumb {
+      width: 92px;
+      height: 92px;
+      position: relative;
+      // &.active::after {
+      //   content: "";
+      //   position: absolute;
+      //   top: 4px;
+      //   left: 4px;
+      //   width: 6px;
+      //   height: 6px;
+      //   border-radius: 100%;
+      //   background: #eee;
+      // }
+      > span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 9px;
+        position: absolute;
+        text-align: center;
+        z-index: 3;
+        bottom: 4px;
+        left: 4px;
+        color: var(--color-fg);
+        background-color: var(--color-bg);
+      }
+    }
+    &-next, &-prev {
+      width: 36px;
+    }
+  }
+}

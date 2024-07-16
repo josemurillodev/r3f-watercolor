@@ -1,0 +1,5 @@
+div.app__scroller {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}

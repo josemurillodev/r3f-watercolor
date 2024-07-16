@@ -1,0 +1,69 @@
+$fade: 0.25s;
+
+@keyframes modalpicker__transition-fadeIn {
+  0% {
+      opacity: 0.0;       
+  }
+  100% {
+      opacity: 1;
+  }       
+}
+
+@keyframes modalpicker__transition-fadeOut {
+  0% {
+      opacity: 1;       
+  }
+  100% {
+      opacity: 0.0;
+  }       
+}
+
+.modalpicker__transition-appear {
+  &.modalpicker__transition-appear-active {
+    animation-name: modalpicker__transition-fadeIn;
+    animation-duration: $fade;   
+    animation-timing-function: ease-in-out;
+    visibility: visible !important;
+  }
+}
+
+.modalpicker__transition-enter {
+  opacity: 0;
+  transition: all $fade ease-in-out;
+  .modalpicker__wrapper {
+    transform: translateY(200px);
+    transition: all $fade ease-in-out;
+  }
+  &.modalpicker__transition-enter-active {
+    opacity: 1;
+    transition: all $fade ease-in-out;
+    .modalpicker__wrapper {
+      transform: translateY(0px);
+      transition: all $fade ease-in-out;
+    }
+  }
+  &-done {
+    opacity: 1;
+    .modalpicker__wrapper {
+      transform: translateY(0px);
+      transition: all $fade ease-in-out;
+    }
+  }
+}
+
+.modalpicker__transition-exit {
+  opacity: 1;
+  transition: all $fade ease-in-out;
+  .modalpicker__wrapper {
+    transform: translateY(0px);
+    transition: all $fade ease-in-out;
+  }
+  &.modalpicker__transition-exit-active {
+    opacity: 0;
+    transition: all $fade ease-in-out;
+    .modalpicker__wrapper {
+      transform: translateY(200px);
+      transition: all $fade ease-in-out;
+    }
+  }
+}

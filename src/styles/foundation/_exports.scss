@@ -1,0 +1,16 @@
+@import './variables';
+
+:export {
+  animationMillis: $time;
+
+  primaryColor: $--primary;
+  secondaryColor: $--secondary;
+
+  mainColor: $--main;
+  successColor: $--success;
+  dangerColor: $--danger;
+  infoColor: $--info;
+  warningColor: $--warning;
+  lightColor: $--color-fg;
+  darkColor: $--color-bg;
+}

@@ -1,0 +1,42 @@
+@use 'sass:math';
+
+// Primary
+
+$--primary: #555555;
+$--secondary: #a834e1;
+
+$--color-fg: #f8f9fa;
+$--color-bg: #161618;
+
+$--main: #555555;
+$--success: #7dd321;
+$--warning: #f0c52d;
+$--danger: #e92c81;
+$--info: #a834e1;
+$--special: #f951d9;
+
+$--color-accent-1: #6859eb;
+$--color-accent-2: #a834e1;
+$--color-accent-3: #f951d9;
+$--color-accent-4: #25c7e3;
+$--color-accent-5: #55b2ba;
+$--color-accent-6: #e92c81;
+$--color-accent-7: #7dd321;
+
+$--color-border: #000000;
+$--color-muted: #1c1c1f;
+$--color-dark: #141416;
+
+$fontPrimary: "Montserrat", -apple-system, BlinkMacSystemFont, Avenir, "Avenir Next", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+$f-xs: .5rem;
+$f-sm: .85rem;
+$f-bs: 1rem;
+$f-md: 1.6rem;
+$f-lg: 2.5rem;
+
+// Urls
+$thumb: url('/images/ui/thumb.png');
+
+$time: 0.75s;
+$semitime: math.div($time, 2);

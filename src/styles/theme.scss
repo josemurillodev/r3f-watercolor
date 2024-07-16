@@ -1,0 +1,226 @@
+@import './foundation/variables';
+
+// Util
+:root {
+  --primary: #{$--primary};
+  --secondary: #{$--secondary};
+
+  --color-fg: #{$--color-fg};
+  --color-bg: #{$--color-bg};
+
+  --main: #{$--main};
+  --success: #{$--success};
+  --warning: #{$--warning};
+  --danger: #{$--danger};
+  --info: #{$--info};
+  --special: #{$--special};
+
+  --color-accent-1: #{$--color-accent-1};
+  --color-accent-2: #{$--color-accent-2};
+  --color-accent-3: #{$--color-accent-3};
+  --color-accent-4: #{$--color-accent-4};
+  --color-accent-5: #{$--color-accent-5};
+  --color-accent-6: #{$--color-accent-6};
+  --color-accent-7: #{$--color-accent-7};
+
+  --color-border: #{$--color-border};
+  --color-muted: #{$--color-muted};
+  --color-dark: #{$--color-dark};
+}
+
+[color-scheme="light"] {
+  --color-fg: #{$--color-bg};
+  --color-bg: #{$--color-fg};
+  --color-muted: #ffffff;
+  --color-border: #e9e9e9;
+  --color-dark: #e9e9e9;
+}
+
+html, body {
+  user-select: none;
+  font-size: 10pt;
+}
+
+body {
+  background-color: black;
+
+  main {
+    background-color: var(--color-bg);
+  }
+}
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-callout: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-modify: none;
+  -webkit-highlight: none;
+  user-select: none;
+}
+
+button {
+  appearance: none;
+  user-select: none;
+  border: 0;
+  cursor: pointer;
+  background-color: var(--color-muted);
+  color: var(--color-fg);
+  font-size: 10pt;
+}
+
+.clear {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.app__layout {
+  flex: 1 1 auto;
+  display: flex;
+  overflow: hidden;
+  > * {
+    flex: 0 0 auto;
+  }
+}
+
+.app__monotext {
+  > span {
+    // text-align: center;
+    min-width: 6px;
+  }
+}
+
+.app__btn {
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.caret-down {
+  padding-right: 18px;
+  background-image: linear-gradient(45deg,transparent 50%,#828282 0),linear-gradient(135deg,#828282 50%,transparent 0),linear-gradient(90deg,transparent,transparent);
+  background-position: calc(100% - 5px) calc(1em - 8px),calc(100% - 0px) calc(1em - 8px),100% 0;
+  background-size: 5px 5px,5px 5px,32px 100%;
+  background-repeat: no-repeat;
+}
+
+.relative {
+  position: relative;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-primary {
+  color: $--main;
+  color: var(--main);
+}
+
+.text-success {
+  color: $--success;
+  color: var(--success);
+}
+
+.text-info {
+  color: $--info;
+  color: var(--info);
+}
+
+.text-danger {
+  color: $--danger;
+  color: var(--danger);
+}
+
+.text-warning {
+  color: $--warning;
+  color: var(--warning);
+}
+
+.text-special {
+  color: $--special;
+  color: var(--special);
+}
+
+.text-muted {
+  color: $--color-muted;
+  color: var(--color-muted)
+}
+
+
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .hidden-sm {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hidden-md {
+    display: none !important;
+  }
+}
+@media (min-width: 1200px) {
+  .hidden-lg {
+    display: none !important;
+  }
+}

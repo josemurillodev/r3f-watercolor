@@ -1,0 +1,118 @@
+@import './variables';
+
+*, *::after, *::before {
+  outline: none !important;
+  box-sizing: border-box;
+  // touch-action: none;
+}
+
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;
+  margin: 0;
+  padding: 0;
+  background-color: $--color-bg;
+  background-color: var(--color-bg);
+  color: $--color-fg;
+  color: var(--color-fg);
+}
+
+html {
+  overflow: hidden;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  font-weight: 300;
+  font-family: $fontPrimary;
+  letter-spacing: 0.05rem;
+
+  .app__container, .app__page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.app__standalone {
+    width: 100vw;
+    height: 100vh;
+    position: relative !important;
+    display: flex;
+    flex-direction: column;
+
+    // .app__statusbar {
+    //   position: relative;
+    //   background: #232323;
+    //   background: var(--color-accent-1);
+    //   z-index: 10;
+    //   flex: 0 0 env(safe-area-inset-top, 23px);
+    // }
+
+    .app__container {
+      margin: 0;
+      width: 100vw;
+      height: auto;
+      flex: 1;
+      position: relative;
+      // padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      // padding-top: 60px;
+    }
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $fontPrimary;
+  margin: 0;
+}
+
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  border: 0;
+}
+
+.form-control {
+  color: gray;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-family: $fontPrimary;
+}
+
+div.scrollable {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  z-index: 5;
+  overscroll-behavior: contain;
+  // border-right: 1px solid rgba(0,0,0,.05);
+}
+
+div.nonscrollable {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 5;
+}

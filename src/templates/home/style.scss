@@ -1,0 +1,14 @@
+.app__blank {
+  .nav {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+  }
+  &--modal {
+    justify-content: flex-end;
+    padding-bottom: env(safe-area-inset-bottom, 4px);
+    // .modalpicker__overlay {
+    //   background-color: transparent;
+    // }
+  }
+}
