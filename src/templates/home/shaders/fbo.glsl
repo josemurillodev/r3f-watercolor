@@ -51,7 +51,7 @@ void main() {
     vec4 color = texture2D(uDiffuse, vUv); // mouse movement
     vec4 prev = texture2D(uPrev, vUv); // prev frame
 
-    vec2 aspect = vec2(1., resolution.y / resolution.x);
+    vec2 aspect = vec2(1., resolution.x / resolution.y);
 
     vec2 disp = fbm(vUv * 22.0, 4) * aspect * 0.01;
 
