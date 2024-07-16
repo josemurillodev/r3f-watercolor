@@ -38,7 +38,7 @@ class CustomCanvasTexture {
     this.canvas.style.left = '0';
     this.canvas.style.width = '100%';
     this.canvas.style.height = '100%';
-    this.canvas.style.zIndex = '1';
+    // this.canvas.style.zIndex = '2';
     this.canvas.style.mixBlendMode = 'multiply';
     // this.canvas.style.opacity = '0.5';
     // this.canvas.style.opacity = '0.00001';
@@ -65,11 +65,12 @@ class CustomCanvasTexture {
       x: e.x,
       y: e.y,
     };
-    this.points.push(new Particles(this.context, this.mouse, this.hue));
+    // TODO: add remove fn
+    // this.points.push(new Particles(this.context, this.mouse, this.hue));
+    for (let i = 0; i < 3; i++) {
+      this.points.push(new Particles(this.context, this.mouse));
+    }
     this.hue += 0.1;
-    // for (let i = 0; i < 5; i++) {
-    //   this.points.push(new Particles(this.context, this.mouse));
-    // }
   };
 
   update = () => {
