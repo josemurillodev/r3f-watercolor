@@ -14,11 +14,13 @@ class CustomCanvasTexture {
 
   height = 256;
 
-  visible = false;
-
-  radius = 80;
+  visible = true;
 
   hue = 0;
+
+  velocity = 10;
+
+  cycles = 3;
 
   mouse = {
     x: -80,
@@ -39,10 +41,10 @@ class CustomCanvasTexture {
     this.canvas.style.width = '100%';
     this.canvas.style.height = '100%';
     // this.canvas.style.zIndex = '2';
-    this.canvas.style.mixBlendMode = 'multiply';
+    // this.canvas.style.mixBlendMode = 'darken';
     // this.canvas.style.opacity = '0.5';
     // this.canvas.style.opacity = '0.00001';
-    this.canvas.style.backgroundColor = 'rgba(255,255,255,1)';
+    this.canvas.style.backgroundColor = 'rgba(250,250,250,1)';
     this.context = this.canvas.getContext('2d')!;
     document.body.append(this.canvas);
 
@@ -54,7 +56,7 @@ class CustomCanvasTexture {
     this.instance = new CanvasTexture(this.canvas);
     this.instance.magFilter = NearestFilter;
     this.context.globalAlpha = 1;
-    this.context.fillStyle = 'rgba(255,255,255,1)';
+    this.context.fillStyle = 'rgba(250,250,250,1)';
     this.context.fillRect(0, 0, this.width, this.height);
 
     document.addEventListener('pointermove', this.pointerMove);
@@ -65,16 +67,15 @@ class CustomCanvasTexture {
       x: e.x,
       y: e.y,
     };
-    // TODO: add remove fn
     // this.points.push(new Particles(this.context, this.mouse, this.hue));
-    for (let i = 0; i < 3; i++) {
-      this.points.push(new Particles(this.context, this.mouse));
+    for (let i = 0; i < this.cycles; i++) {
+      this.points.push(new Particles(this.context, this.mouse, this.hue));
     }
-    this.hue += 0.1;
+    // this.hue += 0.1;
   };
 
-  update = () => {
-    this.context.fillStyle = 'rgba(255,255,255,1)';
+  update = (delta?: number) => {
+    this.context.fillStyle = 'rgba(250,250,250,1)';
     this.context.fillRect(0, 0, this.width, this.height);
     for (let i = 0; i < this.points.length; i += 1) {
       this.points[i].update();
@@ -83,6 +84,9 @@ class CustomCanvasTexture {
         this.points.splice(i, 1);
         --i;
       }
+    }
+    if (delta) {
+      this.hue += delta * this.velocity;
     }
 
     // Update texture instance
@@ -94,11 +98,10 @@ class CustomCanvasTexture {
     // TODO
 
     document.removeEventListener('pointermove', this.pointerMove);
-    // console.log('dispose', this.visible);
   };
 
   getLevaConfig = (cb = noop) => ({
-    visible: {
+    canvas: {
       value: this.visible,
       onChange: (v: boolean) => {
         this.visible = v;
@@ -109,13 +112,48 @@ class CustomCanvasTexture {
         }
       },
     },
-    radius: {
-      value: 20,
+    particles: {
+      value: 3,
+      min: 1,
+      max: 10,
+      step: 1,
+      onChange: (v: number) => {
+        this.cycles = v;
+        this.update();
+        cb();
+      },
+    },
+    velocity: {
+      value: 10,
       min: 1,
       max: 100,
       step: 0.0001,
       onChange: (v: number) => {
-        this.radius = v;
+        this.velocity = v;
+        this.update();
+        cb();
+      },
+    },
+    blend: {
+      value: 'multiply',
+      options: {
+        normal: 'normal',
+        multiply: 'multiply',
+        // screen: 'screen',
+        overlay: 'overlay',
+        darken: 'darken',
+        lighten: 'lighten',
+        // dodge: 'color-dodge',
+        // burn: 'color-burn',
+        difference: 'difference',
+        exclusion: 'exclusion',
+        hue: 'hue',
+        saturation: 'saturation',
+        color: 'color',
+        // luminosity: 'luminosity',
+      },
+      onChange: (v: string) => {
+        this.canvas.style.mixBlendMode = v;
         this.update();
         cb();
       },

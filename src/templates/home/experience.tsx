@@ -78,7 +78,9 @@ function Experience({
   );
 
   useFrame((state, delta) => {
-    canvasTexture.update();
+    // console.log(delta);
+    // canvasTexture.hue += delta * 10;
+    canvasTexture.update(delta);
     onRender();
   });
 
