@@ -18,9 +18,13 @@ class CustomCanvasTexture {
 
   hue = 0;
 
-  velocity = 10;
+  speed = 10;
 
   cycles = 3;
+
+  spread = 3;
+
+  size = 5;
 
   mouse = {
     x: -80,
@@ -69,7 +73,9 @@ class CustomCanvasTexture {
     };
     // this.points.push(new Particles(this.context, this.mouse, this.hue));
     for (let i = 0; i < this.cycles; i++) {
-      this.points.push(new Particles(this.context, this.mouse, this.hue));
+      this.points.push(
+        new Particles(this.context, this.mouse, this.hue, this.size, this.spread)
+      );
     }
     // this.hue += 0.1;
   };
@@ -86,7 +92,7 @@ class CustomCanvasTexture {
       }
     }
     if (delta) {
-      this.hue += delta * this.velocity;
+      this.hue += delta * this.speed;
     }
 
     // Update texture instance
@@ -123,13 +129,35 @@ class CustomCanvasTexture {
         cb();
       },
     },
-    velocity: {
+    size: {
+      value: 5,
+      min: 1,
+      max: 20,
+      step: 0.0001,
+      onChange: (v: number) => {
+        this.size = v;
+        this.update();
+        cb();
+      },
+    },
+    speed: {
       value: 10,
       min: 1,
       max: 100,
       step: 0.0001,
       onChange: (v: number) => {
-        this.velocity = v;
+        this.speed = v;
+        this.update();
+        cb();
+      },
+    },
+    spread: {
+      value: 3,
+      min: 1,
+      max: 10,
+      step: 0.0001,
+      onChange: (v: number) => {
+        this.spread = v;
         this.update();
         cb();
       },

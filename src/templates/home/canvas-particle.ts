@@ -13,13 +13,20 @@ export default class Particles {
 
   hue = 0;
 
-  constructor(ctx: CanvasRenderingContext2D, mouse: { x: number; y: number }, hue = 0) {
+  constructor(
+    ctx: CanvasRenderingContext2D,
+    mouse: { x: number; y: number },
+    hue = 0,
+    radius = 5,
+    velocity = 3
+  ) {
     this.x = mouse.x;
     this.y = mouse.y;
     this.ctx = ctx;
-    this.size = Math.random() * 5 + 1;
-    this.speedx = Math.random() * 3 - 1.5;
-    this.speedy = Math.random() * 3 - 1.5;
+    const halfV = velocity / 2;
+    this.size = Math.random() * radius + 1;
+    this.speedx = Math.random() * velocity - halfV;
+    this.speedy = Math.random() * velocity - halfV;
     this.hue = hue;
   }
 
