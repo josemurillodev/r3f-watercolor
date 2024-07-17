@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal, ThreeElements, useFrame, useThree } from '@react-three/fiber';
 import { folder, useControls, useCreateStore } from 'leva';
 import { StoreType } from 'leva/dist/declarations/src/types';
 import * as THREE from 'three';
 
 import CustomMaterial from './custom-material';
-import CanvasTexture from './canvas-texture';
+import CanvasTexture, { createCanvasTexture } from './canvas-texture';
 import { getElemSize, throttle } from '@/helpers/helper-util';
 
 type ExperienceProps = ThreeElements['group'] & {
@@ -24,10 +24,9 @@ function Experience({
   const matRef = useRef<THREE.MeshBasicMaterial>(null);
   const { width, height } = useThree((state) => state.viewport);
   const sizeRef = useRef(getElemSize());
-  const canvasTexture = useMemo(
-    () => new CanvasTexture(sizeRef.current.width, sizeRef.current.height),
-    []
-  );
+  // const textureRef = useRef(new CanvasTexture());
+  // const [tx, setTx] = useState(textureRef.current);
+  const canvasTexture = useMemo(() => createCanvasTexture(), [width, height]);
   const store = useRef(useCreateStore()).current;
   // const animateRef = useRef(animate);
   const { gl, scene, camera } = useThree();
@@ -50,6 +49,7 @@ function Experience({
     gl.setRenderTarget(targetA.current);
     gl.render(fboScene.current, camera);
 
+    // fboMaterial.current.texture = canvasTexture.instance;
     fboMaterial.current.prev = targetA.current.texture;
     // fboMaterial.time = time;
 
@@ -61,12 +61,27 @@ function Experience({
     const temp = targetA.current;
     targetA.current = targetB.current;
     targetB.current = temp;
-
-    // gl.render(scene, camera);
-    // renderTargetNode();
   }).current;
 
   const delayedRender = useRef(throttle(onRender, 200)).current;
+
+  const resize = useRef(() => {
+    sizeRef.current = getElemSize();
+    // canvasTexture.resize();
+    // targetA.current.setSize(sizeRef.current.width, sizeRef.current.height);
+    // gl.setSize(sizeRef.current.width, sizeRef.current.height);
+
+    if (fboMaterial.current) {
+      fboMaterial.current.uniforms.resolution.value = [
+        sizeRef.current.width,
+        sizeRef.current.height,
+        1,
+        1,
+      ];
+    }
+    // camera.updateProjectionMatrix();
+    delayedRender();
+  }).current;
 
   useControls(
     {
@@ -86,10 +101,11 @@ function Experience({
 
   useEffect(() => {
     setLevaStore(store);
-    window.addEventListener('resize', delayedRender);
+    console.log(fboMaterial.current);
+    window.addEventListener('resize', resize);
     return () => {
       // textureRef.dispose();
-      window.removeEventListener('resize', delayedRender);
+      window.removeEventListener('resize', resize);
     };
   }, []);
   return (

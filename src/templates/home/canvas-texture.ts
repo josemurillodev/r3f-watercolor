@@ -1,7 +1,9 @@
 /* eslint-disable no-plusplus */
 import { CanvasTexture, NearestFilter } from 'three';
 import Particles from './canvas-particle';
-import { noop } from '@/helpers/helper-util';
+import { getElemSize, noop } from '@/helpers/helper-util';
+
+const canvas = document.createElement('canvas');
 
 class CustomCanvasTexture {
   canvas: HTMLCanvasElement;
@@ -33,23 +35,27 @@ class CustomCanvasTexture {
 
   points: Particles[] = [];
 
-  constructor(w = 1, h = 256) {
-    this.canvas = document.createElement('canvas');
-    this.width = w;
-    this.height = h;
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
+  constructor() {
+    this.canvas = canvas;
+    const size = getElemSize();
+    this.width = size.width;
+    this.height = size.height;
+    // this.canvas.width = this.width;
+    // this.canvas.height = this.height;
     this.canvas.style.position = 'fixed';
     this.canvas.style.top = '0';
     this.canvas.style.left = '0';
-    this.canvas.style.width = '100%';
-    this.canvas.style.height = '100%';
+    // this.canvas.style.width = '100%';
+    // this.canvas.style.height = '100%';
     // this.canvas.style.zIndex = '2';
     // this.canvas.style.mixBlendMode = 'darken';
     // this.canvas.style.opacity = '0.5';
     // this.canvas.style.opacity = '0.00001';
-    this.canvas.style.backgroundColor = 'rgba(250,250,250,1)';
+    this.canvas.style.backgroundColor = 'rgba(255,255,255,1)';
     this.context = this.canvas.getContext('2d')!;
+    this.context.canvas.width = this.width;
+    this.context.canvas.height = this.height;
+
     document.body.append(this.canvas);
 
     this.mouse = {
@@ -64,20 +70,19 @@ class CustomCanvasTexture {
     this.context.fillRect(0, 0, this.width, this.height);
 
     document.addEventListener('pointermove', this.pointerMove);
+    // window.addEventListener('resize', this.resize);
   }
 
-  pointerMove = (e: PointerEvent) => {
-    this.mouse = {
-      x: e.x,
-      y: e.y,
-    };
-    // this.points.push(new Particles(this.context, this.mouse, this.hue));
-    for (let i = 0; i < this.cycles; i++) {
-      this.points.push(
-        new Particles(this.context, this.mouse, this.hue, this.size, this.spread)
-      );
-    }
-    // this.hue += 0.1;
+  resize = () => {
+    const size = getElemSize();
+    this.width = size.width;
+    this.height = size.height;
+    this.context.canvas.width = this.width;
+    this.context.canvas.height = this.height;
+    this.context.fillStyle = 'rgba(250,250,250,1)';
+    this.context.fillRect(0, 0, this.width, this.height);
+    // Update texture instance
+    this.instance.needsUpdate = true;
   };
 
   update = (delta?: number) => {
@@ -100,10 +105,32 @@ class CustomCanvasTexture {
   };
 
   dispose = () => {
-    document.body.removeChild(this.canvas);
+    console.log('dispose', this.canvas);
+    document.removeEventListener('pointermove', this.pointerMove);
+    document.body.removeChild(this.context.canvas);
     // TODO
 
-    document.removeEventListener('pointermove', this.pointerMove);
+    // window.removeEventListener('resize', this.resize);
+  };
+
+  getTexture = () => {
+    this.instance = new CanvasTexture(this.canvas);
+    this.instance.magFilter = NearestFilter;
+    return this.instance;
+  };
+
+  pointerMove = (e: PointerEvent) => {
+    this.mouse = {
+      x: e.x,
+      y: e.y,
+    };
+    // this.points.push(new Particles(this.context, this.mouse, this.hue));
+    for (let i = 0; i < this.cycles; i++) {
+      this.points.push(
+        new Particles(this.context, this.mouse, this.hue, this.size, this.spread)
+      );
+    }
+    // this.hue += 0.1;
   };
 
   getLevaConfig = (cb = noop) => ({
@@ -188,5 +215,12 @@ class CustomCanvasTexture {
     },
   });
 }
+
+export const customCanvasTexture = new CustomCanvasTexture();
+export const createCanvasTexture = () => {
+  customCanvasTexture.resize();
+  customCanvasTexture.getTexture();
+  return customCanvasTexture;
+};
 
 export default CustomCanvasTexture;
