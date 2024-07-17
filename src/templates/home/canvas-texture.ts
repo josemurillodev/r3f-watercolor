@@ -3,6 +3,8 @@ import { CanvasTexture, NearestFilter } from 'three';
 import Particles from './canvas-particle';
 import { getElemSize, noop } from '@/helpers/helper-util';
 
+const canvas = document.createElement('canvas');
+
 class CustomCanvasTexture {
   canvas: HTMLCanvasElement;
 
@@ -34,7 +36,7 @@ class CustomCanvasTexture {
   points: Particles[] = [];
 
   constructor() {
-    this.canvas = document.createElement('canvas');
+    this.canvas = canvas;
     const size = getElemSize();
     this.width = size.width;
     this.height = size.height;
@@ -70,20 +72,6 @@ class CustomCanvasTexture {
     document.addEventListener('pointermove', this.pointerMove);
     // window.addEventListener('resize', this.resize);
   }
-
-  pointerMove = (e: PointerEvent) => {
-    this.mouse = {
-      x: e.x,
-      y: e.y,
-    };
-    // this.points.push(new Particles(this.context, this.mouse, this.hue));
-    for (let i = 0; i < this.cycles; i++) {
-      this.points.push(
-        new Particles(this.context, this.mouse, this.hue, this.size, this.spread)
-      );
-    }
-    // this.hue += 0.1;
-  };
 
   resize = () => {
     const size = getElemSize();
@@ -123,6 +111,26 @@ class CustomCanvasTexture {
     // TODO
 
     // window.removeEventListener('resize', this.resize);
+  };
+
+  getTexture = () => {
+    this.instance = new CanvasTexture(this.canvas);
+    this.instance.magFilter = NearestFilter;
+    return this.instance;
+  };
+
+  pointerMove = (e: PointerEvent) => {
+    this.mouse = {
+      x: e.x,
+      y: e.y,
+    };
+    // this.points.push(new Particles(this.context, this.mouse, this.hue));
+    for (let i = 0; i < this.cycles; i++) {
+      this.points.push(
+        new Particles(this.context, this.mouse, this.hue, this.size, this.spread)
+      );
+    }
+    // this.hue += 0.1;
   };
 
   getLevaConfig = (cb = noop) => ({
@@ -207,5 +215,12 @@ class CustomCanvasTexture {
     },
   });
 }
+
+export const customCanvasTexture = new CustomCanvasTexture();
+export const createCanvasTexture = () => {
+  customCanvasTexture.resize();
+  customCanvasTexture.getTexture();
+  return customCanvasTexture;
+};
 
 export default CustomCanvasTexture;

@@ -5,7 +5,7 @@ import { StoreType } from 'leva/dist/declarations/src/types';
 import * as THREE from 'three';
 
 import CustomMaterial from './custom-material';
-import CanvasTexture from './canvas-texture';
+import CanvasTexture, { createCanvasTexture } from './canvas-texture';
 import { getElemSize, throttle } from '@/helpers/helper-util';
 
 type ExperienceProps = ThreeElements['group'] & {
@@ -26,7 +26,7 @@ function Experience({
   const sizeRef = useRef(getElemSize());
   // const textureRef = useRef(new CanvasTexture());
   // const [tx, setTx] = useState(textureRef.current);
-  const canvasTexture = useMemo(() => new CanvasTexture(), [width, height]);
+  const canvasTexture = useMemo(() => createCanvasTexture(), [width, height]);
   const store = useRef(useCreateStore()).current;
   // const animateRef = useRef(animate);
   const { gl, scene, camera } = useThree();
@@ -71,16 +71,14 @@ function Experience({
     // targetA.current.setSize(sizeRef.current.width, sizeRef.current.height);
     // gl.setSize(sizeRef.current.width, sizeRef.current.height);
 
-    // if (fboMaterial.current) {
-    //   fboMaterial.current.texture = canvasTexture.instance;
-    //   fboMaterial.current.prev = canvasTexture.instance;
-    //   fboMaterial.current.uniforms.resolution.value = [
-    //     sizeRef.current.width,
-    //     sizeRef.current.height,
-    //     1,
-    //     1,
-    //   ];
-    // }
+    if (fboMaterial.current) {
+      fboMaterial.current.uniforms.resolution.value = [
+        sizeRef.current.width,
+        sizeRef.current.height,
+        1,
+        1,
+      ];
+    }
     // camera.updateProjectionMatrix();
     delayedRender();
   }).current;
