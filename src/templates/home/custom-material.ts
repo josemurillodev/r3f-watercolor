@@ -46,6 +46,10 @@ export default class CustomMaterial extends MaterialBlank {
   set prev(v: THREE.Texture | THREE.CanvasTexture) {
     this.uniforms.uPrev.value = v;
   }
+
+  set resolution(v: THREE.Vector4) {
+    this.uniforms.resolution.value = v;
+  }
 }
 
 export const speedConfig = { min: 0.0, max: 1, value: 0.05, step: 0.0001 };
