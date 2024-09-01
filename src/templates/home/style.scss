@@ -1,14 +1,76 @@
-.app__blank {
-  .nav {
+.app__three {
+  &--nav {
     position: absolute;
-    right: 50px;
-    bottom: 50px;
+    z-index: 3;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    // bottom: 8px;
+    padding: 8px;
+    border-radius: 2px;
+    overflow: visible;
+    li {
+      padding: 8px;
+      list-style: none;
+      position: relative;
+      appearance: none;
+
+      .icon, .dot {
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        position: relative;
+        background: none;
+        border: 1px solid transparent;
+        display: flex;
+        background-color: rgba(black, 0.4);
+        appearance: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .dot {
+        color: transparent;
+        // text-indent: -9999px;
+        &:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 6px;
+          height: 6px;
+          border-radius: 100%;
+          background: #eee;
+          transition: all .2s linear;
+        }
+      }
+    }
+    a:not(.dot) {
+      color: #fff;
+      user-select: none;
+    }
   }
-  &--modal {
-    justify-content: flex-end;
-    padding-bottom: env(safe-area-inset-bottom, 4px);
-    // .modalpicker__overlay {
-    //   background-color: transparent;
-    // }
+}
+
+.app__configs {
+  // &--leva-scroll {
+  //   background-color: rgba(0,0,0, 0.1);
+  //   border-radius: 4px;
+  //   padding-bottom: 4px;
+  // }
+
+  label[for^="TEXTURE"] {
+    mix-blend-mode: difference;
+  }
+
+  // &--leva-scroll > div:last-child > div > div > div {
+  //   mix-blend-mode: difference;
+  // }
+
+  svg + div {
+    mix-blend-mode: difference;
+    color: rgb(125, 125, 125);
   }
 }

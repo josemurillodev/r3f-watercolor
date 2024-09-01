@@ -8,6 +8,7 @@ import Configs from '@/components/organisms/configs';
 import './style.scss';
 import Experience from './experience';
 import { useLevaContext } from '@/context/leva-context';
+import CanvasNav from './canvas-nav';
 
 function Loader({ progress }: { progress: number }) {
   return (
@@ -50,6 +51,7 @@ export default function App() {
         </Suspense>
         {/* <OrbitControls /> */}
       </Canvas>
+      <CanvasNav />
       <Configs levaStore={levaStore} />
     </>
   );

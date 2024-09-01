@@ -5,7 +5,7 @@ import { StoreType } from 'leva/dist/declarations/src/types';
 import * as THREE from 'three';
 
 import CustomMaterial from './custom-material';
-import CanvasTexture, { createCanvasTexture } from './canvas-texture';
+import { createCanvasTexture } from './canvas-texture';
 import { getElemSize, throttle } from '@/helpers/helper-util';
 
 type ExperienceProps = ThreeElements['group'] & {
